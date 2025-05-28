@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { setintroStep } from "../features/pageSlice";
 
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback, delay) {
@@ -152,20 +154,23 @@ const Triangle = () => {
     )
 }
 
-const PlayIntro = ({ state: [introStep, setIntroStep] }) => {
+const PlayIntro = () => {
 
     const [anmA, setAnmA] = useState(0)
     const [anmT, setAnmT] = useState(0)
 
+    const dispatch = useDispatch()
+    const { introStep } = useSelector((s) => s.page)
+
     function playHandler() {
-        setIntroStep(2)
+        dispatch(setintroStep({ value: 2 }))
     }
 
     function anmEndHandler(event) {
         if (event.type == "animationend") {
-            setIntroStep(1)
-            setTimeout( () => {
-                setIntroStep(0)
+            dispatch(setintroStep({ value: 1 }))
+            setTimeout(() => {
+                dispatch(setintroStep({ value: 0 }))
             }, 200)
         }
     }

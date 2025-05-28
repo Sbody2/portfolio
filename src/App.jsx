@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import './App.css'
 import Background from './components/Background'
 import Interface from './components/Interface'
@@ -6,18 +6,17 @@ import Sections from './components/Sections'
 import PlayIntro from './components/PlayIntro'
 
 function App() {
-  const [introStep, setIntroStep] = useState(3);
-  const [audioVol, setAudioVol] = useState();
 
+  const { introStep } = useSelector((s) => s.page)
   return (
     <>
-      <Interface navBar={introStep == 0} audioVol={audioVol} />
+      <Interface />
       {introStep ?
-        <PlayIntro state={[introStep, setIntroStep]} />
+        <PlayIntro />
         :
         <>
           <Background />
-          <Sections setAudioVol={setAudioVol} />
+          <Sections />
         </>
       }
     </>

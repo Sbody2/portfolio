@@ -1,6 +1,6 @@
 import PenViewer from "./PenViewer"
 
-const Sections = ({ setAudioVol }) => {
+const Sections = () => {
     return (
         <>
             <div id="welcome-section" className="section">
@@ -39,8 +39,8 @@ const Sections = ({ setAudioVol }) => {
                 <script async src="https://public.codepenassets.com/embed/index.js"></script>
                 */}
                 <div className="flexH alignC wrap">
-                    <PenViewer name="JavaScript Calculator" metadata={["zYXzeWM"]} img="https://i.imgur.com/PMxL1cb.png" setAudioVol={setAudioVol} />
-                    <PenViewer name="Pomodoro Clock" metadata={["WbNjYxJ"]} img="https://i.imgur.com/QvK56RF.png" setAudioVol={setAudioVol} />
+                    <PenViewer name="JavaScript Calculator" metadata={["zYXzeWM"]} img="https://i.imgur.com/PMxL1cb.png" />
+                    <PenViewer name="Pomodoro Clock" metadata={["WbNjYxJ"]} img="https://i.imgur.com/QvK56RF.png" />
                 </div>
             </div>
 
@@ -83,9 +83,9 @@ const Sections = ({ setAudioVol }) => {
 
             <div id="contact" className="section">
                 <div className="sectionBg bgB"></div>
-                <h1>CONTACTO</h1>                
+                <h1>CONTACTO</h1>
                 <h4>y demás</h4>
-                <a target="_blank" href="https://www.linkedin.com/in/federico-iglesias-68476533b/">Linkedin</a>
+                <a target="_blank" href="https://www.linkedin.com/in/fede-iglesias/">Linkedin</a>
                 <a target="_blank" id="profile-link" href="https://codepen.io/s-body">CodePen</a>
                 <a target="_blank" id="profile-link" href="https://www.freecodecamp.org/S-body">freeCodeCamp</a>
                 <a target="_blank" href="https://github.com/Sbody2">GitHub</a>

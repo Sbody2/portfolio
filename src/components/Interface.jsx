@@ -1,56 +1,67 @@
 import { useEffect, useRef } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { setAudioPause, toggleAudioEnable } from "../features/pageSlice"
 
-const Interface = ({ navBar, audioVol }) => {
+const Interface = () => {
+
+    const { introStep, audioMaxVol, audioEnabled, audioPaused } = useSelector((s) => s.page)
+    const dispatch = useDispatch()
 
     const audioRef = useRef()
     const audioVolRef = useRef()
 
     useEffect(() => {
-        if (navBar && audioRef.current.paused) {
+        if (introStep == 0 && audioRef.current.paused) {
             audioRef.current.play()
         }
-    }, [navBar])
+    }, [introStep])
 
     useEffect(() => {
         if (audioVolRef.current) {
             clearInterval(audioVolRef.current)
         }
-        if (audioVol == 1) {
-            audioRef.current.play()
-            console.log("play")
+        if (!audioPaused) {
+            if (audioEnabled) {
+                audioRef.current.play()
+            }
+            //dispatch(setAudioPause({ value: false }))
+            //console.log("play")
             audioVolRef.current = setInterval(() => {
-                if (audioRef.current.volume == 1) {
+                if (audioRef.current.volume == audioMaxVol) {
                     clearInterval(audioVolRef.current)
                 } else {
-                    audioRef.current.volume = Math.min(1, audioRef.current.volume + 0.05)
+                    audioRef.current.volume = Math.min(audioMaxVol, audioRef.current.volume + 0.025)
                 }
             }, 50)
-        } else if (audioVol == -1) {
+        } else {
             audioVolRef.current = setInterval(() => {
                 if (audioRef.current.volume == 0) {
                     audioRef.current.pause()
-                    console.log("pause")
+                    //dispatch(setAudioPause({ value: true }))
+                    //console.log("pause")
                     clearInterval(audioVolRef.current)
                 } else {
-                    audioRef.current.volume = Math.max(0, audioRef.current.volume - 0.05)
+                    audioRef.current.volume = Math.max(0, audioRef.current.volume - 0.025)
                 }
             }, 50)
         }
-    }, [audioVol])
+    }, [audioPaused])
 
     function audioToggle() {
-        //audioRef.current.play()
-        //audioRef.current.muted = !audioRef.current.muted    
-        if (audioRef.current.paused) {
+        dispatch(toggleAudioEnable())
+    }
+
+    useEffect(() => {
+        if (audioRef.current.paused && audioEnabled) {
             audioRef.current.play()
         } else {
             audioRef.current.pause()
         }
-    }
+    }, [audioEnabled])
 
     return (
         <>
-            {navBar &&
+            {introStep == 0 &&
                 <>
                     <div className="fadeIntro" />
                     <nav id="navbar" className="navbar">
